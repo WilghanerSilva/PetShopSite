@@ -1,4 +1,4 @@
-export default function Login() {
+export default function Singin() {
     return (
         <div className="w-screen h-screen bg-[url(/Pattern.png)] bg-cover bg-center flex justify-center items-center">
             <div

@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Login');
-})->name('home');
+    return Inertia::render('Signin');
+})->name('user.signin');
 
+Route::get('/signup', function () {
+    return Inertia::render('Signup');
+})->name('user.signup');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
