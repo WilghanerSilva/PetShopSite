@@ -32,6 +32,15 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Por favor, informe seu email.',
+            'email.email' => 'Digite um email válido.',
+            'password.required' => 'Por favor, preencha sua senha.',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
@@ -80,6 +89,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }
