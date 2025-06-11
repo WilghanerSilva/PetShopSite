@@ -49,4 +49,9 @@ class User extends Authenticatable
             'role' => Role::class
         ];
     }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
 }
