@@ -54,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pet::class);
     }
+
+    public function servicesAsEmployee()
+    {
+        return $this->hasMany(Service::class, 'employee_id');
+    }
+
+    public function servicesAsCustomer()
+    {
+        return $this->hasMany(Service::class, 'customer_id');
+    }
 }
