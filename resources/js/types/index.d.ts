@@ -35,9 +35,67 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    role: string;
     avatar?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Pet {
+    id: number;
+    breed: string;
+    name: string;
+    specie: string;
+    user_id: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Service {
+  id: number;
+  data: string;
+  type: string;
+  is_done: boolean;
+  customer_id: number;
+  employee_id: number;
+  pet_id: number;
+  created_at: string;
+  updated_at: string;
+  pet_name: string;
+}
+
+export interface Link {
+    active: boolean;
+    label: string;
+    url: string
+}
+
+
+export interface Pagination {
+    current_page: number;
+    data: Array<Service>;
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: Array<Link>;
+    nex_page_url: string;
+    path:string;
+    per_page: number;
+    prev_page_url: string;
+    to: number;
+    total: number;
+}
+
+export interface User {
+    id: number,
+    name: string,
+    email: string,
+    role: string,
+}
+
+export interface Auth {
+    user: User
 }
