@@ -1,6 +1,8 @@
 import Navbar from "@/components/navbar"
-import ServiceCard from "@/components/ServiceCard";
-import { Auth, Pagination } from "@/types";
+import Pagination from "@/components/pagination";
+import ServiceCard from "@/components/service-card";
+import ServiceForm from "@/components/service-form";
+import { Auth, PaginationType } from "@/types";
 import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react"
 
@@ -9,9 +11,9 @@ import { useEffect, useState } from "react"
 export default function Home () {
     const [orderBy, setOrderBy] = useState("");
     const [direction, setDirection] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const [orderOptions, setOrderOptions] = useState<Array<string>>([]);
-
-    const {pagination, auth} = usePage<{pagination:Pagination, auth:Auth}>().props;
+    const {pagination, auth} = usePage<{pagination:PaginationType, auth:Auth}>().props;
 
     useEffect(()=>{
         if(orderBy === "pet"){
@@ -32,8 +34,9 @@ export default function Home () {
     }, [direction])
 
     return (
-        <div className="w-full h-full min-h-screen bg-white flex flex-col">
+        <div className="w-full h-full min-h-screen bg-white flex flex-col items-center">
             <Navbar/>
+            <ServiceForm showModal={showModal} setShowModal={setShowModal}/>
             <div className="w-full px-8 py-12">
                 <div>
                     <div className="flex justify-between items-center md:flex-row flex-col gap-6">
@@ -70,7 +73,10 @@ export default function Home () {
                             {
                                 auth.user.role == "employee" || auth.user.role == "admin"
                                 &&
-                                <button className="bg-(--orange) text-white rounded-xl font-bold px-2 py-1 hover:cursor-pointer hover:bg-(--dark-orange) text-nowrap">
+                                <button
+                                    className="bg-(--orange) text-white rounded-xl font-bold px-2 py-1 hover:cursor-pointer hover:bg-(--dark-orange) text-nowrap"
+                                    onClick={()=>{setShowModal(true)}}
+                                >
                                     Adicionar Atendimento +
                                 </button>
                             }
@@ -84,6 +90,7 @@ export default function Home () {
                     </div>
                 </div>
             </div>
+            <Pagination pagination={pagination} queryParams={`direction=${direction}&sort=${orderBy}`}/>
         </div>
     )
 }

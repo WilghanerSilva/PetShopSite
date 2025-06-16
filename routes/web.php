@@ -6,7 +6,7 @@ use Inertia\Inertia;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [ServiceController::class, 'index'])->name('home');
-    Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create');
+    Route::post('/services', [ServiceController::class, 'store'])->name('service.store');
 });
 
 require __DIR__ . '/settings.php';

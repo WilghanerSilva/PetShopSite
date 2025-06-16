@@ -1,4 +1,4 @@
-import InputError from "@/components/input-error";
+import InputError from "@/components/ui/input-error";
 import { Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 

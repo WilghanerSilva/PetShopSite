@@ -55,7 +55,7 @@ export interface Pet {
 
 export interface Service {
   id: number;
-  data: string;
+  date: string;
   type: string;
   is_done: boolean;
   customer_id: number;
@@ -73,7 +73,7 @@ export interface Link {
 }
 
 
-export interface Pagination {
+export interface PaginationType {
     current_page: number;
     data: Array<Service>;
     first_page_url: string;

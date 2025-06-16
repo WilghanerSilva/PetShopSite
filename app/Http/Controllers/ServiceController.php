@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreServiceRequest;
 use App\Models\Pet;
 use App\Models\Service;
 use App\Models\User;
@@ -17,8 +18,15 @@ class ServiceController extends Controller
         $user = Auth::user();
         $services = [];
 
-        $sort = $request->input('sort', 'data');
+        $sort = $request->input('sort', 'date');
         $direction = $request->input('direction', 'asc');
+
+        $customerId = $request->input('customer_id', 0);
+        $customers = User::all()->where('role', Role::Costumer)->values()->toArray();
+        $pets = [];
+
+        if ($customerId != 0)
+            $pets = Pet::all()->where('user_id', $customerId)->values()->toArray();
 
 
         if ($user == Role::Costumer) {
@@ -33,7 +41,7 @@ class ServiceController extends Controller
                 $services = Service::query()
                     ->join('pets', 'services.pet_id', '=', 'pets.id')
                     ->where('customer_id', $user->id)
-                    ->orderBy('data', $direction)
+                    ->orderBy('date', $direction)
                     ->select('services.*', 'pets.name as pet_name')
                     ->paginate(9);
         } else {
@@ -48,11 +56,16 @@ class ServiceController extends Controller
                 $services = Service::query()
                     ->join('pets', 'services.pet_id', '=', 'pets.id')
                     ->where('employee_id', $user->id)
-                    ->orderBy('data', $direction)
+                    ->orderBy('date', $direction)
                     ->select('services.*', 'pets.name as pet_name')
                     ->paginate(9);
         }
 
-        return Inertia::render('Home', ['pagination' => $services]);
+        return Inertia::render('Home', ['pagination' => $services, 'customers' => $customers, 'pets' => $pets]);
+    }
+
+    public function store(StoreServiceRequest $request)
+    {
+        Service::create($request->validated());
     }
 }
