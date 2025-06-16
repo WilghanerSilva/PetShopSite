@@ -25,9 +25,11 @@ class ServiceController extends Controller
         $customers = User::all()->where('role', Role::Costumer)->values()->toArray();
         $pets = [];
 
+        if ($direction == '')
+            $direction = 'asc';
+
         if ($customerId != 0)
             $pets = Pet::all()->where('user_id', $customerId)->values()->toArray();
-
 
         if ($user == Role::Costumer) {
             if ($sort == 'pet')

@@ -90,7 +90,7 @@ export default function Home () {
                     </div>
                 </div>
             </div>
-            <Pagination pagination={pagination} queryParams={`direction=${direction}&sort=${orderBy}`}/>
+            <Pagination pagination={pagination} queryParams={`${direction && orderBy ? `direction=${direction}&sort=${orderBy}` : ''}`}/>
         </div>
     )
 }
