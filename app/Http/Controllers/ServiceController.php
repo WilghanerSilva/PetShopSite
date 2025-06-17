@@ -28,10 +28,11 @@ class ServiceController extends Controller
         if ($direction == '')
             $direction = 'asc';
 
+
         if ($customerId != 0)
             $pets = Pet::all()->where('user_id', $customerId)->values()->toArray();
 
-        if ($user == Role::Costumer) {
+        if ($user->role == Role::Costumer) {
             if ($sort == 'pet')
                 $services = Service::query()
                     ->join('pets', 'services.pet_id', '=', 'pets.id')
