@@ -5,6 +5,7 @@ import ServiceForm from "@/components/service-form";
 import { Auth, PaginationType } from "@/types";
 import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react"
+import { Service } from '../types/index';
 
 
 
@@ -85,7 +86,7 @@ export default function Home () {
 
                     <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(460px,1fr))] gap-12 py-8 mt-12 justify-items-center">
                         {pagination.data.map((service, index) => (
-                            <ServiceCard service={service} key={index}/>
+                            <ServiceCard service={service as Service} key={index}/>
                         ))}
                     </div>
                 </div>

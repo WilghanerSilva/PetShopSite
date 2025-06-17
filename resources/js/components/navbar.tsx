@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react"
+import { router, useForm } from "@inertiajs/react"
 
 export default function Navbar() {
     const {post} = useForm()
@@ -23,8 +23,8 @@ export default function Navbar() {
 
 
             <ul className="flex items-center gap-4">
-                <li className="hover:font-bold hover:cursor-pointer">Atendimentos</li>
-                <li className="hover:font-bold hover:cursor-pointer">Meus Pets</li>
+                <li className="hover:font-bold hover:cursor-pointer" onClick={() => {router.visit(route('home'))}}>Atendimentos</li>
+                <li className="hover:font-bold hover:cursor-pointer" onClick={() => {router.visit(route('pet.index'))}}>Meus Pets</li>
                 <li className="hover:font-bold hover:cursor-pointer" onClick={handleLogout}>Sair</li>
             </ul>
         </nav>

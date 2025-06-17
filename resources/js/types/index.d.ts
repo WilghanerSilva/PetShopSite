@@ -48,6 +48,8 @@ export interface Pet {
     breed: string;
     name: string;
     specie: string;
+    age: number;
+    weight: number;
     user_id: string;
     created_at: string;
     updated_at: string;
@@ -75,7 +77,7 @@ export interface Link {
 
 export interface PaginationType {
     current_page: number;
-    data: Array<Service>;
+    data: Array<Service | Pet>;
     first_page_url: string;
     from: number;
     last_page: number;
