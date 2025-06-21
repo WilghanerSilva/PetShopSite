@@ -1,20 +1,25 @@
 import '../css/app.css';
+import '../css/index.css';
 
 import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import React from "react";
 import { createRoot } from 'react-dom/client';
+import { HelmetProvider } from "react-helmet-async";
+import { ThemeProvider } from "./context/ThemeContext";
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
-    setup({ el, App, props }) {
-        const root = createRoot(el);
-
-        root.render(<App {...props} />);
-    },
-    progress: {
-        color: '#4B5563',
-    },
+  resolve: name => import(`./pages/${name}`).then(module => module.default),
+  setup({ el, App, props }) {
+    createRoot(el).render(
+      <React.StrictMode>
+        <HelmetProvider>
+            <ThemeProvider>
+                <App {...props} />
+            </ThemeProvider>
+        </HelmetProvider>
+      </React.StrictMode>
+    );
+  },
 });

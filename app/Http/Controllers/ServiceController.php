@@ -13,7 +13,7 @@ use Inertia\Inertia;
 
 class ServiceController extends Controller
 {
-    public function index(Request $request)
+    public function listByCostumer(Request $request)
     {
         $user = Auth::user();
         $services = [];
@@ -65,6 +65,47 @@ class ServiceController extends Controller
         }
 
         return Inertia::render('Home', ['pagination' => $services, 'customers' => $customers, 'pets' => $pets]);
+    }
+
+    function index(Request $request)
+    {
+
+        $sort = $request->input('sort', 'date');
+        $direction = $request->input('direction', 'asc');
+        $query = $request->input('query', '');
+        $services = [];
+
+
+        if ($query == '')
+            $services = Service::query()
+                ->join('users as customers', 'services.customer_id', '=', 'customers.id')
+                ->join('users as employees', 'services.employee_id', '=', 'employees.id')
+                ->join('pets', 'pets.id', '=', 'pet_id')
+                ->select(
+                    'services.*',
+                    'customers.name as customer_name',
+                    'employees.name as employee_name',
+                    'pets.name as pet_name'
+                )
+                ->orderBy($sort, $direction)
+                ->get();
+        else
+            $services = Service::query()
+                ->join('users as customers', 'services.customer_id', '=', 'customers.id')
+                ->join('users as employees', 'services.employee_id', '=', 'employees.id')
+                ->join('pets', 'pets.id', '=', 'services.pet_id')
+                ->where('pets.name', 'like', "%$query%")
+                ->select(
+                    'services.*',
+                    'customers.name as customer_name',
+                    'employees.name as employee_name',
+                    'pets.name as pet_name'
+                )
+                ->orderBy($sort, $direction)
+                ->get();
+
+
+        return Inertia::render('Dashboard/Services', ['services' => $services]);
     }
 
     public function store(StoreServiceRequest $request)
