@@ -43,7 +43,10 @@ const navItems: NavItem[] = [
   {
     name: "Forms",
     icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+    subItems: [
+        { name: "Adicionar Pet", path: "/dashboard/adicionar-pet", pro: false },
+        { name: "Adicionar Cliente", path: "/dashboard/adicionar-cliente", pro: false }
+    ],
   },
   {
     name: "Tabelas",
@@ -53,8 +56,7 @@ const navItems: NavItem[] = [
         { name: "Pets", path: "/dashboard/pets", pro: false },
         { name: "Serviços", path: "/basic-tables", pro: false },
         { name: "Atendimentos", path: "/dashboard/atendimentos", pro: false }
-
-        ],
+    ],
   },
   {
     name: "Pages",

@@ -51,6 +51,7 @@ export interface Pet {
     age: number;
     weight: number;
     user_id: string;
+    user_name: string;
     created_at: string;
     updated_at: string;
 }
@@ -65,6 +66,8 @@ export interface Service {
   pet_id: number;
   created_at: string;
   updated_at: string;
+  customer_name: string;
+  employee_name: string;
   pet_name: string;
 }
 
