@@ -23,7 +23,7 @@ class PetController extends Controller
     function index(Request $request)
     {
 
-        $sort = $request->input('sort', 'date');
+        $sort = $request->input('sort', 'id');
         $direction = $request->input('direction', 'asc');
         $query = $request->input('query', '');
         $pets = [];
@@ -63,12 +63,14 @@ class PetController extends Controller
         $user = Auth::user();
         $pet = Pet::find($id);
 
-        if ($pet && $user->role === Role::Costumer) {
-            if ($pet->user_id === $user->id)
+        if ($pet) {
+            if ($user->role == Role::Admin || $user->role == Role::Employee) {
                 $pet->delete();
-        } else {
-            if ($pet)
-                $pet->delete();
+            } else {
+                if ($pet->user_id === $user->id) {
+                    $pet->delete();
+                }
+            }
         }
     }
 }
