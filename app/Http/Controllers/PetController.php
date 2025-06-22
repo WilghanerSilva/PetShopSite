@@ -57,4 +57,18 @@ class PetController extends Controller
     {
         Pet::create($request->validated());
     }
+
+    function destroy($id)
+    {
+        $user = Auth::user();
+        $pet = Pet::find($id);
+
+        if ($pet && $user->role === Role::Costumer) {
+            if ($pet->user_id === $user->id)
+                $pet->delete();
+        } else {
+            if ($pet)
+                $pet->delete();
+        }
+    }
 }

@@ -10,10 +10,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [ServiceController::class, 'listByCostumer'])->name('home');
     Route::post('/services', [ServiceController::class, 'store'])->name('service.store');
     Route::get('/pets', [PetController::class, 'listByCustomer'])->name('pet.listByCustomer');
+
     Route::get('/dashboard/pets', [PetController::class, 'index'])->name('dashboard.pet.index');
     Route::post('/dashboard/pets', [PetController::class, 'store'])->name('dashboard.pet.store');
+    Route::get('/dashboard/adicionar-pet', [PetController::class, 'create'])->name('dashboard.pet.create');
+    Route::delete('/dashboard/pet/{id}', [PetController::class, 'destroy'])->name('dashboard.pet.delete');
+
     Route::get('/dashboard/clientes', [CustomerController::class, 'index'])->name('dashboard.customer.index');
-    Route::get('/dashboard/adicionar-pet', [PetController::class, 'create'])->name('dashboard.customer.create');
     Route::get('/dashboard/atendimentos', [ServiceController::class, 'index'])->name('dashboard.service.index');
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Home');
