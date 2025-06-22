@@ -17,7 +17,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/dashboard/pet/{id}', [PetController::class, 'destroy'])->name('dashboard.pet.delete');
 
     Route::get('/dashboard/clientes', [CustomerController::class, 'index'])->name('dashboard.customer.index');
+    Route::delete('/dashboard/clientes', [CustomerController::class, 'destroy'])->name('dashboard.customer.delete');
     Route::get('/dashboard/atendimentos', [ServiceController::class, 'index'])->name('dashboard.service.index');
+
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Home');
     })->name('dashboard');
