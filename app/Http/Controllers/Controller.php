@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-abstract class Controller
-{
-    //
-}
+use Inertia\Inertia;
+
+abstract class Controller {}

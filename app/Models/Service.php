@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     protected $fillable = [
-        'date',
-        'type',
+        'price',
         'is_done',
         'customer_id',
         'employee_id',

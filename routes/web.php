@@ -13,6 +13,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pets', [PetController::class, 'listByCustomer'])->name('pet.listByCustomer');
 
     Route::get('/dashboard/pets', [PetController::class, 'index'])->name('dashboard.pet.index');
+    Route::get('/dashboard/editar-pet/{id}', [PetController::class, 'edit'])->name('dashboard.pet.edit');
+    Route::put('/dashboard/pet/{id}', [PetController::class, 'update'])->name('dashboard.pet.update');
     Route::post('/dashboard/pets', [PetController::class, 'store'])->name('dashboard.pet.store');
     Route::get('/dashboard/adicionar-pet', [PetController::class, 'create'])->name('dashboard.pet.create');
     Route::delete('/dashboard/pet/{id}', [PetController::class, 'destroy'])->name('dashboard.pet.delete');
@@ -28,9 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/dashboard/servicos/{id}', [ServiceTypeController::class, 'update'])->name('dashboard.service-type.update');
     Route::delete('/dashboard/servicos/{id}', [ServiceTypeController::class, 'destroy'])->name('dashboard.service-type.destroy');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard/Home');
-    })->name('dashboard');
+    Route::get('/dashboard', [ServiceController::class, 'pdvShow'])->name('dashboard');
 });
 
 require __DIR__ . '/settings.php';

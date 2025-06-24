@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\Pet;
 use App\Models\Service;
+use App\Models\ServiceType;
 use App\Models\User;
 use App\Role;
 use Illuminate\Http\Request;
@@ -110,6 +111,29 @@ class ServiceController extends Controller
 
     public function store(StoreServiceRequest $request)
     {
-        Service::create($request->validated());
+        $service = Service::create([
+            'is_done'     => $request->validated()['is_done'],
+            'customer_id' => $request->validated()['customer_id'],
+            'employee_id' => $request->validated()['employee_id'],
+            'pet_id'      => $request->validated()['pet_id'],
+            'price'       => $request->validated()['price']
+        ]);
+
+        $service->types()->attach($request->validated()['serviceTypes']);
+    }
+
+    public function pdvShow(Request $request)
+    {
+        $serviceTypes = ServiceType::all()->values()->toArray();
+        $customers = User::where('role', Role::Costumer)->get();
+        $customerId = $request->input('customer_id', 0);
+
+        $pets = [];
+
+        if ($customerId != 0) {
+            $pets = Pet::where('user_id', $customerId)->get();
+        }
+
+        return Inertia::render('Dashboard/Home', ['pets' => $pets, 'customers' => $customers, 'serviceTypes' => $serviceTypes]);
     }
 }

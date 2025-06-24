@@ -58,8 +58,7 @@ export interface Pet {
 
 export interface Service {
   id: number;
-  date: string;
-  type: string;
+  price: number;
   is_done: boolean;
   customer_id: number;
   employee_id: number;
@@ -69,6 +68,7 @@ export interface Service {
   customer_name: string;
   employee_name: string;
   pet_name: string;
+  created_at: string
 }
 
 export interface Link {
@@ -103,4 +103,10 @@ export interface User {
 
 export interface Auth {
     user: User
+}
+
+export interface ServiceType {
+    id:number,
+    name: string,
+    price: number
 }

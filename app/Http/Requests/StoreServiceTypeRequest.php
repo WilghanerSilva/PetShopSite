@@ -32,8 +32,8 @@ class StoreServiceTypeRequest extends FormRequest
         return [
             'name.required' => 'Por favor, informe o nome do serviço',
             'name.max' => 'O nome informado ultrapassa o limite de caracteres',
-            'weight.required' => 'Por favor, informe o valor do serviço',
-            'weight.min' => 'Digite um valor com número positivo',
+            'price.required' => 'Por favor, informe o valor do serviço',
+            'price.min' => 'Digite um valor com número positivo',
         ];
     }
 }

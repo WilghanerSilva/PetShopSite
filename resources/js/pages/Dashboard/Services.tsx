@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import AppLayout from "@/layout/AppLayout";
 import { Service} from "@/types";
 import { router, usePage } from "@inertiajs/react";
-import { TrashIcon, PencilIcon, ChevronDown, ChevronUp} from "lucide-react";
+import { ChevronDown, ChevronUp} from "lucide-react";
 import { FormEventHandler, useEffect, useState } from "react";
 
 export default function Services() {
@@ -57,6 +57,14 @@ export default function Services() {
         if(sort == headerElement){
             return <button onClick={()=>{handleSetOrder()}}>{renderIcon()}</button>
         }
+    }
+
+    const dateFormat = (isoString: string) => {
+        const date = new Date(isoString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // mês começa em 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
     }
 
     return (
@@ -124,20 +132,6 @@ export default function Services() {
                             </TableCell>
                             <TableCell
                              isHeader={true}
-                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400 w-max"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <span
-                                     onClick={() => {setSort("type")}}
-                                     className="hover:cursor-pointer"
-                                    >
-                                        Tipo
-                                    </span>
-                                    {renderButton("type")}
-                                </div>
-                            </TableCell>
-                            <TableCell
-                             isHeader={true}
                              className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                             >
                                 <div className="flex items-center gap-2">
@@ -148,20 +142,6 @@ export default function Services() {
                                         Cliente
                                     </span>
                                     {renderButton("customer_name")}
-                                </div>
-                            </TableCell>
-                            <TableCell
-                             isHeader={true}
-                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <span
-                                     onClick={() => {setSort("pet_name")}}
-                                     className="hover:cursor-pointer"
-                                    >
-                                        Pet
-                                    </span>
-                                    {renderButton("pet_name")}
                                 </div>
                             </TableCell>
                             <TableCell
@@ -184,19 +164,41 @@ export default function Services() {
                             >
                                 <div className="flex items-center gap-2">
                                     <span
-                                    onClick={() => {setSort("date")}}
-                                    className="hover:cursor-pointer"
+                                     onClick={() => {setSort("pet_name")}}
+                                     className="hover:cursor-pointer"
                                     >
-                                        Data
+                                        Pet
                                     </span>
-                                    {renderButton("date")}
+                                    {renderButton("pet_name")}
                                 </div>
                             </TableCell>
                             <TableCell
                              isHeader={true}
                              className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                             >
-                                Ações
+                                <div className="flex items-center gap-2">
+                                    <span
+                                     onClick={() => {setSort("price")}}
+                                     className="hover:cursor-pointer"
+                                    >
+                                        Preço
+                                    </span>
+                                    {renderButton("price")}
+                                </div>
+                            </TableCell>
+                            <TableCell
+                             isHeader={true}
+                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <span
+                                    onClick={() => {setSort("created_at")}}
+                                    className="hover:cursor-pointer"
+                                    >
+                                        Data
+                                    </span>
+                                    {renderButton("created_at")}
+                                </div>
                             </TableCell>
                         </TableRow>
                     </TableHeader>
@@ -213,17 +215,7 @@ export default function Services() {
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {service.type}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                                             {service.customer_name}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {service.pet_name}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
@@ -233,13 +225,20 @@ export default function Services() {
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {service.date}
+                                            {service.pet_name}
                                         </span>
                                     </TableCell>
-                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex gap-4">
-                                        <button><PencilIcon color="#3641F5"/></button>
-                                        <button><TrashIcon color="#D92D20"/></button>
+                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                                            {`R$ ${service.price.toFixed(2)}`}
+                                        </span>
                                     </TableCell>
+                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                                            {dateFormat(service.updated_at)}
+                                        </span>
+                                    </TableCell>
+
                                 </TableRow>
                             ))
                         }

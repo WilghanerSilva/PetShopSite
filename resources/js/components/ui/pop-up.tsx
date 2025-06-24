@@ -6,14 +6,9 @@ interface PopUpProps {
 }
 
 export const PopUp = forwardRef(({
-        message,
-        variant = "success"
+        message
     }:PopUpProps, ref) => {
 
-    const variantClasses = {
-        success:"success-600",
-        error: "error-600"
-    }
 
     const [isOpen, setIsOpen] = useState(false);
     const [loadingBarShow, setLoadingBarShow] = useState(true);
@@ -46,9 +41,9 @@ export const PopUp = forwardRef(({
     useImperativeHandle(ref, () => showMessage);
 
     return (
-        <div className={`absolute right-6 top-6 dark:bg-gray-900 border border-${variantClasses[variant]} py-4 px-2 rounded-lg ${renderVisibility()} transition duration-500 ease-in-out`}>
-            <span className={`text-${variantClasses[variant]} font-bold`}>{message}</span>
-            <div className={`h-0.5 bg-${variantClasses[variant]} rounded-full ${renderLoadingBarSize()} transition-all duration-[2000ms] ease-linear`}/>
+        <div className={`absolute right-6 top-6 dark:bg-gray-900 border border-success-600 py-4 px-2 rounded-lg ${renderVisibility()} transition duration-500 ease-in-out`}>
+            <span className={`text-success-600 font-bold`}>{message}</span>
+            <div className={`h-0.5 bg-success-600 rounded-full ${renderLoadingBarSize()} transition-all duration-[2000ms] ease-linear`}/>
         </div>
     )
 })

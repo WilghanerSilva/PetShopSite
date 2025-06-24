@@ -4,10 +4,12 @@ import { useSidebar } from "../context/SidebarContext";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
 import NotificationDropdown from "../components/header/NotificationDropdown";
 import UserDropdown from "../components/header/UserDropdown";
-import { Link } from "lucide-react";
+import { Link, LogOutIcon } from "lucide-react";
+import { useForm } from "@inertiajs/react";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
+  const {post} = useForm()
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
 
@@ -164,7 +166,7 @@ const AppHeader: React.FC = () => {
             {/* <!-- Notification Menu Area --> */}
           </div>
           {/* <!-- User Area --> */}
-          <UserDropdown />
+          <LogOutIcon className="text-gray-400 hover:cursor-pointer" onClick={()=>{post(route("logout"))}}/>
         </div>
       </div>
     </header>
