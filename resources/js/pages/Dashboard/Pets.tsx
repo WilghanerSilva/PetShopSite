@@ -129,7 +129,7 @@ export default function Pets() {
                             <input
                              type="text"
                              placeholder="Pesquisar pet"
-                             className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:bg-white/[0.03] dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[430px]"
+                             className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[430px]"
                              value={query}
                              onChange={e => {setQuery(e.target.value)}}
                             />
@@ -299,7 +299,7 @@ export default function Pets() {
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex gap-4">
-                                        <button><PencilIcon color="#3641F5"/></button>
+                                        <button onClick={()=> router.visit(route('dashboard.pet.edit', pet.id))}><PencilIcon color="#3641F5"/></button>
                                         <button onClick={() => handleShowConfirmingModal(pet.id)}><TrashIcon color="#D92D20"/></button>
                                     </TableCell>
                                 </TableRow>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePetRequest;
+use App\Http\Requests\UpdatePetRequest;
 use App\Models\Pet;
 use App\Models\User;
 use App\Role;
@@ -44,6 +45,28 @@ class PetController extends Controller
                 ->get();
 
         return Inertia::render('Dashboard/Pets', ['pets' => $pets]);
+    }
+
+    function edit($id)
+    {
+        $pet = Pet::FindOrFail($id);
+
+        return Inertia::render('Dashboard/EditPet', ['pet' => $pet]);
+    }
+
+    function update(UpdatePetRequest $request, $id)
+    {
+        $request->validated();
+
+        $pet = Pet::findOrFail($id);
+
+        $pet->update([
+            'name' => $request->name,
+            'breed' => $request->breed,
+            'specie' => $request->specie,
+            'age' => $request->age,
+            'weight' => $request->weight,
+        ]);
     }
 
     function create()
