@@ -15,6 +15,11 @@ class Service extends Model
         'pet_id'
     ];
 
+    public function types()
+    {
+        return $this->belongsToMany(ServiceType::class);
+    }
+
     public function customer()
     {
         return $this->belongsTo(User::class, 'customer_id');
