@@ -7,17 +7,32 @@ use App\Models\ServiceType;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ServiceTypeController extends Controller
 {
     public function index()
     {
         $servicesTypes = ServiceType::all()->values()->toArray();
+
+        return Inertia::render('Dashboard/ServicesTypes', ['servicesTypes' => $servicesTypes]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Dashboard/CreateServiceType');
     }
 
     public function store(StoreServiceTypeRequest $request)
     {
         ServiceType::create($request->validated());
+    }
+
+    public function edit($id)
+    {
+        $serviceType = ServiceType::findOrFail($id);
+
+        return Inertia::render('Dashboard/EditServiceType', ['serviceType' => $serviceType]);
     }
 
     public function update(Request $request, $id)
@@ -27,7 +42,7 @@ class ServiceTypeController extends Controller
             'price' => ['required', 'decimal:*,2', 'min:0']
         ]);
 
-        $serviceType = ServiceType::findOrFall($id);
+        $serviceType = ServiceType::findOrFail($id);
 
         $serviceType->update([
             'name' => $request->name,
