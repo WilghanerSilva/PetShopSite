@@ -29,7 +29,7 @@ export default function EditServiceType() {
 
     const onSubmit:FormEventHandler<HTMLFormElement> = (e) => {
             e.preventDefault()
-            put(route('dashboard.service-type.update', serviceType.id), {
+            put(route('panel.service-type.update', serviceType.id), {
                 onSuccess:() => {
                     showMessageRef.current?.()
                 }

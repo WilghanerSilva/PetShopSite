@@ -4,14 +4,13 @@ import { PopUp } from "@/components/ui/pop-up";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { CloseIcon } from "@/icons";
 import AppLayout from "@/layout/AppLayout";
-import { User} from "@/types";
+import { ServiceType} from "@/types";
 import { router, usePage } from "@inertiajs/react";
 import { TrashIcon, PencilIcon, ChevronDown, ChevronUp} from "lucide-react";
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 
 export default function Pets() {
-    const {customers} = usePage<{customers:Array<User>}>().props;
-    const [excludingCustomerName, setExcludingCustomerName] = useState("");
+    const {servicesTypes} = usePage<{servicesTypes:Array<ServiceType>}>().props
     const [sort, setSort] = useState("id");
     const [order, setOrder] = useState("asc");
     const [query, setQuery] = useState("");
@@ -22,12 +21,12 @@ export default function Pets() {
 
     useEffect(()=>{
         if(query == "")
-            router.visit(route('dashboard.customer.index',{sort: sort, direction: order}), {
+            router.visit(route('panel.service-type.index',{sort: sort, direction: order}), {
                 preserveState: true,
                 preserveScroll: true
             })
         else
-            router.visit(route('dashboard.customer.index',{sort: sort, direction: order, query: query}), {
+            router.visit(route('panel.service-type.index',{sort: sort, direction: order, query: query}), {
                 preserveState: true,
                 preserveScroll: true
             })
@@ -35,7 +34,7 @@ export default function Pets() {
 
     const onSubmit:FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
-        router.visit(route('dashboard.customer.index',{sort: sort, direction: order, query: query}), {
+        router.visit(route('panel.service-type.index',{sort: sort, direction: order, query: query}), {
             preserveState: true,
             preserveScroll: true
         })
@@ -81,10 +80,10 @@ export default function Pets() {
     }
 
     const handleConfirmDelete = () => {
-        router.delete(`/dashboard/customer/${deletingId}`, {
+        router.delete(`/panel/servicos/${deletingId}`, {
             onSuccess: () => {
                 router.reload({
-                    only:["customers"]
+                    only:["servicesTypes"]
                 });
                 showMessageRef.current?.()
                 handleCloseConfirmingModal()
@@ -96,17 +95,17 @@ export default function Pets() {
         <AppLayout>
             <Modal isOpen={confirming} onClose={handleCloseConfirmingModal}>
                 <div className="h-full w-full flex flex-col justify-center items-center p-8 gap-4">
-                    <p className="text-brand-200 font-bold text-xl">{`Tem certeza de que deseja remover ${excludingCustomerName} do seu sistema?`}</p>
+                    <p className="text-brand-200 font-bold text-xl">Tem certeza de que deseja excluir esse serviço do seu sistema?</p>
                     <div className="inline-flex gap-4">
-                        <Button startIcon={<TrashIcon/>} onClick={handleConfirmDelete}>Remover</Button>
+                        <Button startIcon={<TrashIcon/>} onClick={handleConfirmDelete}>Excluir</Button>
                         <Button startIcon={<CloseIcon/>} onClick={handleCloseConfirmingModal}>Cancelar</Button>
                     </div>
                 </div>
             </Modal>
             <div className="flex-1 dark:bg-gray-900 text-brand-200 h-full relative">
-                <PopUp message="Pet excluido com sucesso" variant="success" ref={showMessageRef}/>
+                <PopUp message="Serviço excluido com sucesso" variant="success" ref={showMessageRef}/>
                 <div className="flex items-center justify-between mb-9">
-                    <h1 className="font-bold text-2xl text-center">Clientes</h1>
+                    <h1 className="font-bold text-2xl text-center">Serviços</h1>
                     <div className="hidden lg:block">
                         <form onSubmit={onSubmit}>
                         <div className="relative">
@@ -129,7 +128,7 @@ export default function Pets() {
                             </span>
                             <input
                              type="text"
-                             placeholder="Pesquisar cliente pelo nome"
+                             placeholder="Pesquisar serviço"
                              className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[430px]"
                              value={query}
                              onChange={e => {setQuery(e.target.value)}}
@@ -142,6 +141,12 @@ export default function Pets() {
                         </div>
                         </form>
                     </div>
+                    <button
+                     className="bg-brand-700 hover:bg-brand-900 px-2 py-1 rounded-xl font-bold text-white"
+                     onClick={() => {router.visit(route("panel.service-type.create"))}}
+                    >
+                        Adicionar Serviço +
+                    </button>
                 </div>
                 <Table>
                     <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
@@ -180,12 +185,12 @@ export default function Pets() {
                             >
                                 <div className="flex items-center gap-2">
                                     <span
-                                     onClick={() => {setSort("email")}}
+                                     onClick={() => {setSort("age")}}
                                      className="hover:cursor-pointer"
                                     >
-                                        Email
+                                        Preço
                                     </span>
-                                    {renderButton("email")}
+                                    {renderButton("age")}
                                 </div>
                             </TableCell>
                             <TableCell
@@ -198,35 +203,28 @@ export default function Pets() {
                     </TableHeader>
                     <TableBody>
                         {
-                            customers
+                            servicesTypes
                             &&
-                            customers.map((customer, index) => (
-                                <TableRow key={customer.id} className={getColorByIndex(index)}>
+                            servicesTypes.map((serviceType, index) => (
+                                <TableRow key={serviceType.id} className={getColorByIndex(index)}>
                                     <TableCell className="px-5 py-4 sm:px-6 text-start">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {customer.id}
+                                            {serviceType.id}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {customer.name}
+                                            {serviceType.name}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {customer.email}
+                                            {`R$ ${serviceType.price.toFixed(2)}`}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex gap-4">
-                                        <button><PencilIcon color="#3641F5"/></button>
-                                        <button
-                                         onClick={() => {
-                                            handleShowConfirmingModal(customer.id)
-                                            setExcludingCustomerName(customer.name)
-                                         }}
-                                        >
-                                            <TrashIcon color="#D92D20"/>
-                                        </button>
+                                        <button onClick={()=> router.visit(route('panel.service-type.edit', serviceType.id))}><PencilIcon color="#3641F5"/></button>
+                                        <button onClick={() => handleShowConfirmingModal(serviceType.id)}><TrashIcon color="#D92D20"/></button>
                                     </TableCell>
                                 </TableRow>
                             ))

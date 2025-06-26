@@ -15,12 +15,12 @@ class ServiceTypeController extends Controller
     {
         $servicesTypes = ServiceType::all()->values()->toArray();
 
-        return Inertia::render('Dashboard/ServicesTypes', ['servicesTypes' => $servicesTypes]);
+        return Inertia::render('Panel/ServiceType/List', ['servicesTypes' => $servicesTypes]);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/CreateServiceType');
+        return Inertia::render('Panel/ServiceType/Create');
     }
 
     public function store(StoreServiceTypeRequest $request)
@@ -32,7 +32,7 @@ class ServiceTypeController extends Controller
     {
         $serviceType = ServiceType::findOrFail($id);
 
-        return Inertia::render('Dashboard/EditServiceType', ['serviceType' => $serviceType]);
+        return Inertia::render('Panel/ServiceType/Edit', ['serviceType' => $serviceType]);
     }
 
     public function update(Request $request, $id)

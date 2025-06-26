@@ -35,7 +35,7 @@ export default function EditPet() {
 
     const onSubmit:FormEventHandler<HTMLFormElement> = (e) => {
             e.preventDefault()
-            put(route('dashboard.pet.update', pet.id), {
+            put(route('panel.pet.update', pet.id), {
                 onSuccess:() => {
                     showMessageRef.current?.()
                 }

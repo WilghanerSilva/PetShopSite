@@ -66,7 +66,7 @@ export default function CreatePet() {
 
     const onSubmit:FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
-        post(route("dashboard.pet.store"), {
+        post(route("panel.pet.store"), {
             onSuccess: () => {
                 showMessageRef.current?.()
                 clearInputs()

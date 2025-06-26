@@ -23,24 +23,24 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Ponto de Venda",
-    path: "/dashboard"
+    path: "/panel"
   },
   {
     name: "Formulários",
     icon: <ListIcon />,
     subItems: [
-        { name: "Adicionar Pet", path: "/dashboard/adicionar-pet", pro: false },
-        { name: "Adicionar Servico", path: "/dashboard/adicionar-servico", pro: false }
+        { name: "Adicionar Pet", path: "/panel/adicionar-pet", pro: false },
+        { name: "Adicionar Servico", path: "/panel/adicionar-servico", pro: false }
     ],
   },
   {
     name: "Tabelas",
     icon: <TableIcon />,
     subItems: [
-        { name: "Clientes", path: "/dashboard/clientes", pro: false },
-        { name: "Pets", path: "/dashboard/pets", pro: false },
-        { name: "Serviços", path: "/dashboard/servicos", pro: false },
-        { name: "Atendimentos", path: "/dashboard/atendimentos", pro: false }
+        { name: "Clientes", path: "/panel/clientes", pro: false },
+        { name: "Pets", path: "/panel/pets", pro: false },
+        { name: "Serviços", path: "/panel/servicos", pro: false },
+        { name: "Atendimentos", path: "/panel/atendimentos", pro: false }
     ],
   },
 ];

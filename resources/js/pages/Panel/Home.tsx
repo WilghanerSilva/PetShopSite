@@ -72,7 +72,7 @@ export default function Dashboard() {
     },[customers, serviceTypes, pets])
 
     useEffect(()=>{
-        router.visit(route('dashboard',{customer_id: data.customer_id}), {
+        router.visit(route('panel.pdv',{customer_id: data.customer_id}), {
             preserveState: true,
             preserveScroll: true
         })
@@ -107,42 +107,46 @@ export default function Dashboard() {
 
     return (
         <AppLayout>
-            <div className="border border-brand-200 rounded-xl h-full">
-                    <ComponentCard title="Adicionar Atendimento">
-                        <div className="flex justify-between px-8">
-                            <Form onSubmit={onSubmit} className="flex justify-center flex-col gap-5">
-                                <div>
-                                    <Label>Cliente</Label>
-                                    <Select
-                                    options={customersOptions}
-                                    onChange={(value)=>{setData("customer_id", parseInt(value))}}/>
-                                </div>
-                                <InputError message={errors.customer_id}/>
-                                <div>
-                                    <Label>Pet</Label>
-                                    <Select
-                                    options={petsOptions}
-                                    onChange={(value) => {setData("pet_id", parseInt(value))}}/>
-                                </div>
-                                <InputError message={errors.pet_id}/>
-                                <div className="text-amber-50">
-                                    <MultiSelect
-                                        label="Serviços"
-                                        options={serviceTypesOptions}
-                                        onChange={values => handleChangeSelectedValues(values)}
-                                    />
-                                    <p className="sr-only">
-                                        Selected Values: {selectedValues.join(", ")}
-                                    </p>
-                                </div>
-                                <InputError message={errors.serviceTypes}/>
-                                <Button>Adicionar</Button>
-
-                            </Form>
+            <div className="flex-1 flex justify-between p-4 gap-4">
+                <div className="bg-white/[0.03] dark:border-gray-200 border-gray-200 rounded-xl flex flex-col p-4 items-center w-1/2">
+                    <h1 className="font-bold text-2xl text-gray-300 p-3 w-fit">Em Progresso</h1>
+                    <p>Teste</p>
+                </div>
+                <ComponentCard title="Adicionar Atendimento" className="w-1/2 h-full">
+                    <div className="flex justify-between px-8">
+                        <Form onSubmit={onSubmit} className="flex justify-center flex-col gap-5 w-full">
                             <h1 className="text-success-600 text-xl font-bold">{`Valor: R$${totalPrice.toFixed(2)}`}</h1>
-                        </div>
+                            <div>
+                                <Label>Cliente</Label>
+                                <Select
+                                options={customersOptions}
+                                onChange={(value)=>{setData("customer_id", parseInt(value))}}/>
+                            </div>
+                            <InputError message={errors.customer_id}/>
+                            <div>
+                                <Label>Pet</Label>
+                                <Select
+                                options={petsOptions}
+                                onChange={(value) => {setData("pet_id", parseInt(value))}}/>
+                            </div>
+                            <InputError message={errors.pet_id}/>
+                            <div className="text-amber-50">
+                                <MultiSelect
+                                    label="Serviços"
+                                    options={serviceTypesOptions}
+                                    onChange={values => handleChangeSelectedValues(values)}
+                                />
+                                <p className="sr-only">
+                                    Selected Values: {selectedValues.join(", ")}
+                                </p>
+                            </div>
+                            <InputError message={errors.serviceTypes}/>
+                            <Button>Adicionar</Button>
 
-                    </ComponentCard>
+                        </Form>
+                    </div>
+
+                </ComponentCard>
             </div>
         </AppLayout>
     )

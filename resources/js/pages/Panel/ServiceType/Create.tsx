@@ -30,7 +30,7 @@ export default function CreateServiceType() {
 
     const onSubmit:FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
-        post(route("dashboard.service-type.store"), {
+        post(route("panel.service-type.store"), {
             onSuccess: () => {
                 showMessageRef.current?.()
                 clearInputs()

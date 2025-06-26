@@ -106,34 +106,20 @@ class ServiceController extends Controller
                 ->get();
 
 
-        return Inertia::render('Dashboard/Services', ['services' => $services]);
+        return Inertia::render('Panel/Service/List', ['services' => $services]);
     }
 
     public function store(StoreServiceRequest $request)
     {
         $service = Service::create([
-            'is_done'     => $request->validated()['is_done'],
-            'customer_id' => $request->validated()['customer_id'],
-            'employee_id' => $request->validated()['employee_id'],
-            'pet_id'      => $request->validated()['pet_id'],
-            'price'       => $request->validated()['price']
+            'is_done'        => $request->validated()['is_done'],
+            'customer_id'    => $request->validated()['customer_id'],
+            'employee_id'    => $request->validated()['employee_id'],
+            'pos_session_id' => $request->validated()['pos_session_id'],
+            'pet_id'         => $request->validated()['pet_id'],
+            'price'          => $request->validated()['price']
         ]);
 
         $service->types()->attach($request->validated()['serviceTypes']);
-    }
-
-    public function pdvShow(Request $request)
-    {
-        $serviceTypes = ServiceType::all()->values()->toArray();
-        $customers = User::where('role', Role::Costumer)->get();
-        $customerId = $request->input('customer_id', 0);
-
-        $pets = [];
-
-        if ($customerId != 0) {
-            $pets = Pet::where('user_id', $customerId)->get();
-        }
-
-        return Inertia::render('Dashboard/Home', ['pets' => $pets, 'customers' => $customers, 'serviceTypes' => $serviceTypes]);
     }
 }

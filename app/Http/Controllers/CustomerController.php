@@ -28,7 +28,7 @@ class CustomerController extends Controller
                 ->orderBy($sort, $direction)
                 ->get();
 
-        return Inertia::render('Dashboard/Customers', ['customers' => $customers]);
+        return Inertia::render('Panel/Customer/List', ['customers' => $customers]);
     }
 
     function destroy($id)

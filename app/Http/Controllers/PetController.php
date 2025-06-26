@@ -44,14 +44,14 @@ class PetController extends Controller
                 ->orderBy($sort, $direction)
                 ->get();
 
-        return Inertia::render('Dashboard/Pets', ['pets' => $pets]);
+        return Inertia::render('Panel/Pet/List', ['pets' => $pets]);
     }
 
     function edit($id)
     {
         $pet = Pet::FindOrFail($id);
 
-        return Inertia::render('Dashboard/EditPet', ['pet' => $pet]);
+        return Inertia::render('Panel/Pet/Edit', ['pet' => $pet]);
     }
 
     function update(UpdatePetRequest $request, $id)
@@ -73,7 +73,7 @@ class PetController extends Controller
     {
         $customers = User::all()->where('role', Role::Costumer)->values()->toArray();
 
-        return Inertia::render('Dashboard/CreatePet', ['customers' => $customers]);
+        return Inertia::render('Panel/Pet/Create', ['customers' => $customers]);
     }
 
     function store(StorePetRequest $request)

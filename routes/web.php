@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\PosSessionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceTypeController;
 use Illuminate\Support\Facades\Route;
@@ -12,25 +13,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/services', [ServiceController::class, 'store'])->name('service.store');
     Route::get('/pets', [PetController::class, 'listByCustomer'])->name('pet.listByCustomer');
 
-    Route::get('/dashboard/pets', [PetController::class, 'index'])->name('dashboard.pet.index');
-    Route::get('/dashboard/editar-pet/{id}', [PetController::class, 'edit'])->name('dashboard.pet.edit');
-    Route::put('/dashboard/pet/{id}', [PetController::class, 'update'])->name('dashboard.pet.update');
-    Route::post('/dashboard/pets', [PetController::class, 'store'])->name('dashboard.pet.store');
-    Route::get('/dashboard/adicionar-pet', [PetController::class, 'create'])->name('dashboard.pet.create');
-    Route::delete('/dashboard/pet/{id}', [PetController::class, 'destroy'])->name('dashboard.pet.delete');
+    Route::get('/panel/pets', [PetController::class, 'index'])->name('panel.pet.index');
+    Route::get('/panel/editar-pet/{id}', [PetController::class, 'edit'])->name('panel.pet.edit');
+    Route::put('/panel/pet/{id}', [PetController::class, 'update'])->name('panel.pet.update');
+    Route::post('/panel/pets', [PetController::class, 'store'])->name('panel.pet.store');
+    Route::get('/panel/adicionar-pet', [PetController::class, 'create'])->name('panel.pet.create');
+    Route::delete('/panel/pet/{id}', [PetController::class, 'destroy'])->name('panel.pet.delete');
 
-    Route::get('/dashboard/clientes', [CustomerController::class, 'index'])->name('dashboard.customer.index');
-    Route::delete('/dashboard/clientes', [CustomerController::class, 'destroy'])->name('dashboard.customer.delete');
-    Route::get('/dashboard/atendimentos', [ServiceController::class, 'index'])->name('dashboard.service.index');
+    Route::get('/panel/clientes', [CustomerController::class, 'index'])->name('panel.customer.index');
+    Route::delete('/panel/clientes', [CustomerController::class, 'destroy'])->name('panel.customer.delete');
+    Route::get('/panel/atendimentos', [ServiceController::class, 'index'])->name('panel.service.index');
 
-    Route::get('/dashboard/servicos', [ServiceTypeController::class, 'index'])->name('dashboard.service-type.index');
-    Route::get('/dashboard/adicionar-servico', [ServiceTypeController::class, 'create'])->name('dashboard.service-type.create');
-    Route::get('/dashboard/editar-servico/${id}', [ServiceTypeController::class, 'edit'])->name('dashboard.service-type.edit');
-    Route::post('/dashboard/servicos', [ServiceTypeController::class, 'store'])->name('dashboard.service-type.store');
-    Route::put('/dashboard/servicos/{id}', [ServiceTypeController::class, 'update'])->name('dashboard.service-type.update');
-    Route::delete('/dashboard/servicos/{id}', [ServiceTypeController::class, 'destroy'])->name('dashboard.service-type.destroy');
+    Route::get('/panel/servicos', [ServiceTypeController::class, 'index'])->name('panel.service-type.index');
+    Route::get('/panel/adicionar-servico', [ServiceTypeController::class, 'create'])->name('panel.service-type.create');
+    Route::get('/panel/editar-servico/${id}', [ServiceTypeController::class, 'edit'])->name('panel.service-type.edit');
+    Route::post('/panel/servicos', [ServiceTypeController::class, 'store'])->name('panel.service-type.store');
+    Route::put('/panel/servicos/{id}', [ServiceTypeController::class, 'update'])->name('panel.service-type.update');
+    Route::delete('/panel/servicos/{id}', [ServiceTypeController::class, 'destroy'])->name('panel.service-type.destroy');
 
-    Route::get('/dashboard', [ServiceController::class, 'pdvShow'])->name('dashboard');
+    Route::get('/panel', [PosSessionController::class, 'pdvHome'])->name('panel.pdv');
 });
 
 require __DIR__ . '/settings.php';

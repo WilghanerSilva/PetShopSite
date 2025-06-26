@@ -1,32 +1,24 @@
-import Button from "@/components/ui/button/Button";
-import { Modal } from "@/components/ui/modal";
-import { PopUp } from "@/components/ui/pop-up";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { CloseIcon } from "@/icons";
 import AppLayout from "@/layout/AppLayout";
-import { Pet} from "@/types";
+import { Service} from "@/types";
 import { router, usePage } from "@inertiajs/react";
-import { TrashIcon, PencilIcon, ChevronDown, ChevronUp} from "lucide-react";
-import { FormEventHandler, useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronUp} from "lucide-react";
+import { FormEventHandler, useEffect, useState } from "react";
 
-export default function Pets() {
-    const {pets} = usePage<{pets:Array<Pet>}>().props
+export default function Services() {
+    const {services} = usePage<{services:Array<Service>}>().props
     const [sort, setSort] = useState("id");
     const [order, setOrder] = useState("asc");
     const [query, setQuery] = useState("");
-    const [confirming, setConfirming] = useState<boolean>(false);
-    const [deletingId, setDeletingId] = useState<number | null>(null);
-
-    const showMessageRef = useRef<()=>void | null>(null);
 
     useEffect(()=>{
         if(query == "")
-            router.visit(route('dashboard.pet.index',{sort: sort, direction: order}), {
+            router.visit(route('panel.service.index',{sort: sort, direction: order}), {
                 preserveState: true,
                 preserveScroll: true
             })
         else
-            router.visit(route('dashboard.pet.index',{sort: sort, direction: order, query: query}), {
+            router.visit(route('panel.service.index',{sort: sort, direction: order, query: query}), {
                 preserveState: true,
                 preserveScroll: true
             })
@@ -34,7 +26,7 @@ export default function Pets() {
 
     const onSubmit:FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
-        router.visit(route('dashboard.pet.index',{sort: sort, direction: order, query: query}), {
+        router.visit(route('panel.service.index',{sort: sort, direction: order, query: query}), {
             preserveState: true,
             preserveScroll: true
         })
@@ -67,45 +59,19 @@ export default function Pets() {
         }
     }
 
-    const handleShowConfirmingModal = (id: number) => {
-        if(id){
-            setDeletingId(id);
-            setConfirming(true);
-        }
-    }
-
-    const handleCloseConfirmingModal = () => {
-        setDeletingId(null);
-        setConfirming(false);
-    }
-
-    const handleConfirmDelete = () => {
-        router.delete(`/dashboard/pet/${deletingId}`, {
-            onSuccess: () => {
-                router.reload({
-                    only:["pets"]
-                });
-                showMessageRef.current?.()
-                handleCloseConfirmingModal()
-            }
-        })
+    const dateFormat = (isoString: string) => {
+        const date = new Date(isoString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // mês começa em 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
     }
 
     return (
         <AppLayout>
-            <Modal isOpen={confirming} onClose={handleCloseConfirmingModal}>
-                <div className="h-full w-full flex flex-col justify-center items-center p-8 gap-4">
-                    <p className="text-brand-200 font-bold text-xl">Tem certeza de que deseja excluir o pet do seu sistema?</p>
-                    <div className="inline-flex gap-4">
-                        <Button startIcon={<TrashIcon/>} onClick={handleConfirmDelete}>Excluir</Button>
-                        <Button startIcon={<CloseIcon/>} onClick={handleCloseConfirmingModal}>Cancelar</Button>
-                    </div>
-                </div>
-            </Modal>
-            <div className="flex-1 dark:bg-gray-900 text-brand-200 h-full relative">
-                <PopUp message="Pet excluido com sucesso" variant="success" ref={showMessageRef}/>
+            <div className="flex-1 dark:bg-gray-900 text-brand-200 h-full">
                 <div className="flex items-center justify-between mb-9">
-                    <h1 className="font-bold text-2xl text-center">Pets</h1>
+                    <h1 className="font-bold text-2xl text-center">Atendimentos</h1>
                     <div className="hidden lg:block">
                         <form onSubmit={onSubmit}>
                         <div className="relative">
@@ -142,8 +108,7 @@ export default function Pets() {
                         </form>
                     </div>
                     <button
-                     className="bg-brand-700 hover:bg-brand-900 px-2 py-1 rounded-xl font-bold text-white"
-                     onClick={() => {router.visit(route("dashboard.pet.create"))}}
+                    className="bg-brand-700 hover:bg-brand-900 px-2 py-1 rounded-xl font-bold text-white"
                     >
                         Adicionar Pet +
                     </button>
@@ -167,16 +132,16 @@ export default function Pets() {
                             </TableCell>
                             <TableCell
                              isHeader={true}
-                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400 w-max"
+                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                             >
                                 <div className="flex items-center gap-2">
                                     <span
-                                     onClick={() => {setSort("name")}}
+                                     onClick={() => {setSort("customer_name")}}
                                      className="hover:cursor-pointer"
                                     >
-                                        Nome
+                                        Cliente
                                     </span>
-                                    {renderButton("name")}
+                                    {renderButton("customer_name")}
                                 </div>
                             </TableCell>
                             <TableCell
@@ -185,40 +150,12 @@ export default function Pets() {
                             >
                                 <div className="flex items-center gap-2">
                                     <span
-                                     onClick={() => {setSort("age")}}
-                                     className="hover:cursor-pointer"
-                                    >
-                                        Idade
-                                    </span>
-                                    {renderButton("age")}
-                                </div>
-                            </TableCell>
-                            <TableCell
-                             isHeader={true}
-                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <span
-                                     onClick={() => {setSort("weight")}}
-                                     className="hover:cursor-pointer"
-                                    >
-                                        Peso
-                                    </span>
-                                    {renderButton("weight")}
-                                </div>
-                            </TableCell>
-                            <TableCell
-                             isHeader={true}
-                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <span
-                                    onClick={() => {setSort("specie")}}
+                                    onClick={() => {setSort("employee_name")}}
                                     className="hover:cursor-pointer"
                                     >
-                                        Especie
+                                        Funcionario
                                     </span>
-                                    {renderButton("specie")}
+                                    {renderButton("employee_name")}
                                 </div>
                             </TableCell>
                             <TableCell
@@ -227,12 +164,12 @@ export default function Pets() {
                             >
                                 <div className="flex items-center gap-2">
                                     <span
-                                     onClick={() => {setSort("breed")}}
+                                     onClick={() => {setSort("pet_name")}}
                                      className="hover:cursor-pointer"
                                     >
-                                        Raça
+                                        Pet
                                     </span>
-                                    {renderButton("breed")}
+                                    {renderButton("pet_name")}
                                 </div>
                             </TableCell>
                             <TableCell
@@ -241,67 +178,67 @@ export default function Pets() {
                             >
                                 <div className="flex items-center gap-2">
                                     <span
-                                     onClick={() => {setSort("user_name")}}
+                                     onClick={() => {setSort("price")}}
                                      className="hover:cursor-pointer"
                                     >
-                                        Dono
+                                        Preço
                                     </span>
-                                    {renderButton("user_name")}
+                                    {renderButton("price")}
                                 </div>
                             </TableCell>
                             <TableCell
                              isHeader={true}
                              className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                             >
-                                Ações
+                                <div className="flex items-center gap-2">
+                                    <span
+                                    onClick={() => {setSort("created_at")}}
+                                    className="hover:cursor-pointer"
+                                    >
+                                        Data
+                                    </span>
+                                    {renderButton("created_at")}
+                                </div>
                             </TableCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {
-                            pets
+                            services
                             &&
-                            pets.map((pet, index) => (
-                                <TableRow key={pet.id} className={getColorByIndex(index)}>
+                            services.map((service, index) => (
+                                <TableRow key={service.id} className={getColorByIndex(index)}>
                                     <TableCell className="px-5 py-4 sm:px-6 text-start">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.id}
+                                            {service.id}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.name}
+                                            {service.customer_name}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.age}
+                                            {service.employee_name}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.weight}
+                                            {service.pet_name}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.specie}
+                                            {`R$ ${service.price.toFixed(2)}`}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.breed}
+                                            {dateFormat(service.updated_at)}
                                         </span>
                                     </TableCell>
-                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {pet.user_name}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex gap-4">
-                                        <button onClick={()=> router.visit(route('dashboard.pet.edit', pet.id))}><PencilIcon color="#3641F5"/></button>
-                                        <button onClick={() => handleShowConfirmingModal(pet.id)}><TrashIcon color="#D92D20"/></button>
-                                    </TableCell>
+
                                 </TableRow>
                             ))
                         }
