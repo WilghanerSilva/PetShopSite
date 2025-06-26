@@ -68,7 +68,8 @@ export interface Service {
   customer_name: string;
   employee_name: string;
   pet_name: string;
-  created_at: string
+  created_at: string,
+  types: Array<ServiceType>
 }
 
 export interface Link {
@@ -109,4 +110,12 @@ export interface ServiceType {
     id:number,
     name: string,
     price: number
+}
+
+export interface PosSession {
+    id: number;
+    balance: number;
+    opening_balance: number;
+    closing_balance: number;
+    description: string;
 }

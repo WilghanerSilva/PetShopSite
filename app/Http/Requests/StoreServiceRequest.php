@@ -28,6 +28,7 @@ class StoreServiceRequest extends FormRequest
             'is_done' => ['required', 'boolean'],
             'customer_id' => ['required', 'exists:users,id'],
             'employee_id' => ['required', 'exists:users,id'],
+            'pos_session_id' => ['required', 'exists:pos_sessions,id'],
             'pet_id' => ['required', 'exists:pets,id'],
             'serviceTypes' => ['required', 'array'],
             'serviceTypes.*' => ['integer', 'exists:service_types,id'],
@@ -39,13 +40,14 @@ class StoreServiceRequest extends FormRequest
     {
         return [
             'serviceTypes.required' => 'Por favor, informe os serviços realizados',
-
             'is_done.required' => 'Informe se o atendimento foi realizado ou não',
             'is_done.boolean' => 'Formato inválido',
             'customer_id.required' => 'Informe o cliente para o qual o atendimento foi realizado',
             'customer_id.exists' => 'O usuário informado não está cadastrado',
             'pet_id.required' => 'Informe o pet para o qual o atendimento foi realizado',
             'pet_id.exists' => 'O pet informado não está cadastrado no sistema',
+            'pos_session_id.required' => 'Informe a sessão na qual o atendimento pertence',
+            'pos_session_id.exists' => 'A sessão informada não está cadastrado no sistema',
             'serviceTypes.*.exists' => 'Um ou mais serviços informados não estão cadastrados no sistema',
             'price.required' => 'Por favor, informe o valor do serviço',
             'price.min' => 'Digite um valor com número positivo',

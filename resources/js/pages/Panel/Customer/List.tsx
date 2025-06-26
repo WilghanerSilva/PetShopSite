@@ -6,7 +6,7 @@ import { CloseIcon } from "@/icons";
 import AppLayout from "@/layout/AppLayout";
 import { User} from "@/types";
 import { router, usePage } from "@inertiajs/react";
-import { TrashIcon, PencilIcon, ChevronDown, ChevronUp} from "lucide-react";
+import { TrashIcon,  ChevronDown, ChevronUp} from "lucide-react";
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 
 export default function Pets() {
@@ -218,7 +218,6 @@ export default function Pets() {
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex gap-4">
-                                        <button><PencilIcon color="#3641F5"/></button>
                                         <button
                                          onClick={() => {
                                             handleShowConfirmingModal(customer.id)

@@ -11,7 +11,8 @@ class Service extends Model
         'is_done',
         'customer_id',
         'employee_id',
-        'pet_id'
+        'pet_id',
+        'pos_session_id'
     ];
 
     public function types()
@@ -32,5 +33,10 @@ class Service extends Model
     public function pet()
     {
         return $this->belongsTo(Pet::class);
+    }
+
+    public function posSession()
+    {
+        return $this->belongsTo(PosSession::class);
     }
 }

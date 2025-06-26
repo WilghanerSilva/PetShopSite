@@ -44,7 +44,7 @@ export default function EditPet() {
 
     return (
         <AppLayout>
-            <ComponentCard title="Editar Serviço" desc={`Atualmente você está editando: ${pet.name}`} className="relative">
+            <ComponentCard title="Editar Serviço" desc={`Atualmente você está editando: ${pet.name}`} className="relative flex-1">
                 <PopUp message="Pet editado com sucesso" variant="success" ref={showMessageRef}/>
                 <Form onSubmit={onSubmit} className="flex flex-col gap-4">
                     <div className="inline-flex gap-2 items-center">

@@ -76,7 +76,7 @@ export default function CreatePet() {
 
     return (
         <AppLayout>
-            <ComponentCard title="Cadastrar Pet" desc="Preencha o formulário para adicionar um pet" className="relative">
+            <ComponentCard title="Cadastrar Pet" desc="Preencha o formulário para adicionar um pet" className="relative flex-1">
                 <PopUp message="Pet cadastrado com sucesso!!" variant="success" ref={showMessageRef}/>
                 <Form onSubmit={onSubmit} className="gap-4 flex flex-col">
                     <div>

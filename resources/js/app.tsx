@@ -6,6 +6,7 @@ import React from "react";
 import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "./context/ThemeContext";
+import { PosSessionProvider } from "./context/PosSessionContext";
 
 
 
@@ -16,7 +17,9 @@ createInertiaApp({
       <React.StrictMode>
         <HelmetProvider>
             <ThemeProvider>
-                <App {...props} />
+                <PosSessionProvider>
+                    <App {...props} />
+                </PosSessionProvider>
             </ThemeProvider>
         </HelmetProvider>
       </React.StrictMode>

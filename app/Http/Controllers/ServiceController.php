@@ -117,7 +117,7 @@ class ServiceController extends Controller
             'employee_id'    => $request->validated()['employee_id'],
             'pos_session_id' => $request->validated()['pos_session_id'],
             'pet_id'         => $request->validated()['pet_id'],
-            'price'          => $request->validated()['price']
+            'price'          => $request->validated()['price'],
         ]);
 
         $service->types()->attach($request->validated()['serviceTypes']);

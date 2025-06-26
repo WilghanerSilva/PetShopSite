@@ -32,6 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/panel/servicos/{id}', [ServiceTypeController::class, 'destroy'])->name('panel.service-type.destroy');
 
     Route::get('/panel', [PosSessionController::class, 'pdvHome'])->name('panel.pdv');
+    Route::post('/panel/pos_session', [PosSessionController::class, 'store'])->name('panel.pos_session.store');
+    Route::put('/panel/pos_session/{id}', [PosSessionController::class, 'updateBalance'])->name('panel.pos_session.update_balance');
 });
 
 require __DIR__ . '/settings.php';
