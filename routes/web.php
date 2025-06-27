@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [ServiceController::class, 'listByCostumer'])->name('home');
+    Route::get('/', function () {
+        return redirect()->route("panel.pdv");
+    })->name('home');
     Route::post('/services', [ServiceController::class, 'store'])->name('service.store');
     Route::get('/pets', [PetController::class, 'listByCustomer'])->name('pet.listByCustomer');
 
