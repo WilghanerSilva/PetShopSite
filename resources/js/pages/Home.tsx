@@ -16,6 +16,11 @@ export default function Home () {
     const [orderOptions, setOrderOptions] = useState<Array<string>>([]);
     const {pagination, auth} = usePage<{pagination:PaginationType, auth:Auth}>().props;
 
+    useEffect(()=> {
+        if(auth.user.role !== "customer")
+            router.visit(route('panel.pdv'))
+    },[])
+
     useEffect(()=>{
         if(orderBy === "pet"){
             setOrderOptions(["A-Z","Z-A"])

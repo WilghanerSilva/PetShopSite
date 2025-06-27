@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('breed');
             $table->string('specie');
-            $table->foreignId('user_id')->constrained('user_id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }
 
