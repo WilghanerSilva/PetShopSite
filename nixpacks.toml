@@ -9,6 +9,8 @@ cmds = [
 
 [phases.build]
 cmds = [
+  "php artisan key:generate",
+  "cp .env.example .env",
   "npm run build",
   "php artisan config:cache",
   "php artisan route:cache",
