@@ -9,7 +9,8 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "npm run build",
+  "npm run build || { echo 'VITE BUILD FALHOU'; exit 1; }",
+  "ls -la public/build/assets",
   "php artisan config:cache",
   "php artisan route:cache",
   "php artisan view:cache"
