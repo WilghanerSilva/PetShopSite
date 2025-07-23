@@ -24,7 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pos_sessions', function (Blueprint $table) {
-            //
+            $table->dropForeign(['user_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 };

@@ -12,21 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pos_sessions', function (Blueprint $table) {
-            $table->addColumn('decimal', 'opening_balance', [
-                'precision' => 8,
-                'scale' => 2,
-            ])->nullable();
-
-            $table->addColumn('decimal', 'closing_balance', [
-                'precision' => 8,
-                'scale' => 2,
-            ])->nullable();
-
-            $table->addColumn('decimal', 'balance', [
-                'precision' => 8,
-                'scale' => 2,
-            ])->nullable();
-
+            $table->decimal('opening_balance', 10, 2)->nullable();
+            $table->decimal('closing_balance', 10, 2)->nullable();
+            $table->decimal('balance', 10, 2)->nullable();
             $table->text('description')->nullable();
         });
     }
