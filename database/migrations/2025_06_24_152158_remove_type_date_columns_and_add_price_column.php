@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->addColumn('decimal', 'price', [
-                'precision' => 8,
-                'scale' => 2,
-            ])->nullable();
+            $table->decimal('price', 8, 2)->nullable();
             $table->dropColumn('date');
             $table->dropColumn('type');
         });
