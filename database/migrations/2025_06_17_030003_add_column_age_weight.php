@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pets', function (Blueprint $table) {
-            $table->addColumn('integer', 'age')->nullable();
-            $table->addColumn('decimal', 'weight', [
-                'precision' => 8,
-                'scale' => 2,
-            ])->nullable();
+            if (!Schema::hasColumn('pets', 'age')) {
+                $table->integer('age')->nullable();
+            }
+
+            if (!Schema::hasColumn('pets', 'weight')) {
+                $table->decimal('weight', 8, 2)->nullable();
+            }
         });
     }
 
