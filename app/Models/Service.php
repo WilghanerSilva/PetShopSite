@@ -15,6 +15,10 @@ class Service extends Model
         'pos_session_id'
     ];
 
+    protected $casts = [
+        'price' => 'decimal:2'
+    ];
+
     public function types()
     {
         return $this->belongsToMany(ServiceType::class);

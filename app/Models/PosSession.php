@@ -16,6 +16,12 @@ class PosSession extends Model
         'user_id',
     ];
 
+    protected $casts = [
+        'opening_balance' => 'decimal:2',
+        'closing_balance' => 'decimal:2',
+        'balance' => 'decimal:2'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
