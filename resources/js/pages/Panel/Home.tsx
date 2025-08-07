@@ -226,7 +226,7 @@ export default function Dashboard() {
           <ComponentCard title="Adicionar Atendimento" className="w-full">
             <Form onSubmit={onSubmit} className="flex flex-col gap-5 w-full p-4">
               <h1 className="text-success-600 text-xl font-bold">
-                {`Valor: R$${totalPrice.toFixed(2)}`}
+                {`Valor: R$${Number(totalPrice.toFixed(2))}`}
               </h1>
               <div>
                 <Label>Cliente</Label>
