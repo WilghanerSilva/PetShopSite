@@ -40,7 +40,7 @@ export default function CreateServiceType() {
 
     return (
         <AppLayout>
-            <ComponentCard title="Cadastrar Pet" desc="Preencha o formulário para adicionar um pet" className="relative">
+            <ComponentCard title="Cadastrar Serviço" desc="Preencha o formulário para adicionar um novo serviço" className="relative flex-1">
                 <PopUp message="Serviço cadastrado com sucesso" variant="success" ref={showMessageRef}/>
                 <Form onSubmit={onSubmit} className="gap-4 flex flex-col">
                     <div>

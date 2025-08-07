@@ -26,7 +26,7 @@ class StorePosSessionRequest extends FormRequest
             'opening_balance' => ['required', 'decimal:*,2', 'min:0'],
             'balance' => ['decimal:*,2', 'min:0'],
             'closing_balance' => ['decimal:*,2', 'min:0'],
-            'description' => ['text']
+            'description' => ['string', 'nullable']
         ];
     }
 
