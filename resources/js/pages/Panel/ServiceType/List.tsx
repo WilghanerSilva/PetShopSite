@@ -219,7 +219,7 @@ export default function Pets() {
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                            {`R$ ${serviceType.price.toFixed(2)}`}
+                                            {`R$ ${Number(serviceType.price.toFixed(2))}`}
                                         </span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex gap-4">
