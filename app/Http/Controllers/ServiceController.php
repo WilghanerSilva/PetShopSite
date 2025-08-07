@@ -71,7 +71,7 @@ class ServiceController extends Controller
     function index(Request $request)
     {
 
-        $sort = $request->input('sort', 'date');
+        $sort = $request->input('sort', 'created_at');
         $direction = $request->input('direction', 'asc');
         $query = $request->input('query', '');
         $services = [];
